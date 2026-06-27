@@ -1,10 +1,10 @@
-"""Database module for Black Meridian Logon UI"""
+"""Database module for Black Meridian"""
 
 import sqlite3
 import os
 from datetime import datetime
 from pathlib import Path
-from config import DB_FILE, DB_PATH, DB_BACKUP_DIR, CREATE_DEMO_ACCOUNT, DEMO_USERNAME, DEMO_PASSWORD, DEMO_EMAIL
+from config import DB_FILE, DB_PATH, DB_BACKUP_DIR, CREATE_DEMO_ACCOUNTS, DEMO_ACCOUNTS
 
 
 class DatabaseManager:
@@ -98,15 +98,17 @@ class DatabaseManager:
             
             conn.commit()
             
-            # Create demo account if needed
-            if CREATE_DEMO_ACCOUNT and not self.user_exists(DEMO_USERNAME):
-                self.create_user(
-                    username=DEMO_USERNAME,
-                    password=DEMO_PASSWORD,
-                    email=DEMO_EMAIL,
-                    full_name="Administrator",
-                    is_admin=True
-                )
+            # Create demo accounts if needed
+            if CREATE_DEMO_ACCOUNTS:
+                for account in DEMO_ACCOUNTS:
+                    if not self.user_exists(account['username']):
+                        self.create_user(
+                            username=account['username'],
+                            password=account['password'],
+                            email=account['email'],
+                            full_name=account['full_name'],
+                            is_admin=account['is_admin']
+                        )
         
         except sqlite3.Error as e:
             print(f"Database initialization error: {e}")
