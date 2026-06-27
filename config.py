@@ -35,7 +35,7 @@ FONT_SIZE_BUTTON = 12
 
 # Input Validation
 MIN_USERNAME_LENGTH = 3
-MIN_PASSWORD_LENGTH = 8
+MIN_PASSWORD_LENGTH = 4  # Lowered to allow "1234"
 MAX_USERNAME_LENGTH = 50
 MAX_PASSWORD_LENGTH = 100
 
@@ -46,9 +46,9 @@ LOCKOUT_DURATION = 300  # 5 minutes in seconds
 
 # Password Security
 BCRYPT_ROUNDS = 12  # Number of rounds for bcrypt hashing
-REQUIRE_UPPERCASE = True
-REQUIRE_LOWERCASE = True
-REQUIRE_NUMBERS = True
+REQUIRE_UPPERCASE = False  # Disabled for demo account
+REQUIRE_LOWERCASE = False  # Disabled for demo account
+REQUIRE_NUMBERS = False    # Disabled for demo account
 REQUIRE_SPECIAL_CHARS = False
 
 # Database Features
@@ -56,8 +56,22 @@ ENABLE_USER_REGISTRATION = True
 ENABLE_AUDIT_LOG = True
 ENABLE_SESSION_TRACKING = True
 
-# Demo Account (for first-time setup)
-DEMO_USERNAME = "admin"
-DEMO_PASSWORD = "Admin@123"
-DEMO_EMAIL = "admin@blackmeridian.local"
-CREATE_DEMO_ACCOUNT = True  # Create demo account on first run
+# Demo Accounts (for first-time setup)
+DEMO_ACCOUNTS = [
+    {
+        "username": "admin",
+        "password": "Admin@123",
+        "email": "admin@blackmeridian.local",
+        "full_name": "Administrator",
+        "is_admin": True
+    },
+    {
+        "username": "demo",
+        "password": "1234",
+        "email": "demo@blackmeridian.local",
+        "full_name": "Demo User",
+        "is_admin": False
+    }
+]
+
+CREATE_DEMO_ACCOUNTS = True  # Create demo accounts on first run
