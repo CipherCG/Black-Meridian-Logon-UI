@@ -30,7 +30,11 @@ class LoginWindow(QMainWindow):
         # Window settings
         self.setWindowTitle("Black Meridian")
         self.setGeometry(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT)
-        self.setResizable(WINDOW_RESIZABLE)
+        
+        # Set resizable property
+        if not WINDOW_RESIZABLE:
+            self.setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT)
+        
         self.setWindowIcon(self.get_icon())
         
         # Central widget
