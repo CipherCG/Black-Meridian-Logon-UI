@@ -49,3 +49,11 @@ venv.bak/
 # Logs
 *.log
 logging/
+
+# Database files
+data/
+*.db
+*.db-journal
+
+# Backups
+backups/
