@@ -1,4 +1,4 @@
-"""Login UI Module for Black Meridian Logon"""
+"""Login UI Module for Black Meridian"""
 
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
@@ -7,16 +7,17 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QIcon, QColor, QPalette
 from config import (
-    APP_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_RESIZABLE,
+    WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_RESIZABLE,
     BACKGROUND_COLOR, PRIMARY_COLOR, TEXT_COLOR, ERROR_COLOR,
     SUCCESS_COLOR, FONT_FAMILY, FONT_SIZE_TITLE, FONT_SIZE_LABEL,
     FONT_SIZE_INPUT, FONT_SIZE_BUTTON, BORDER_COLOR
 )
 from auth import AuthenticationManager
+import os
 
 
 class LoginWindow(QMainWindow):
-    """Main login window"""
+    """Main login window for Black Meridian"""
     
     def __init__(self):
         super().__init__()
@@ -27,9 +28,10 @@ class LoginWindow(QMainWindow):
     def init_ui(self):
         """Initialize the user interface"""
         # Window settings
-        self.setWindowTitle(APP_TITLE)
+        self.setWindowTitle("Black Meridian")
         self.setGeometry(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT)
         self.setResizable(WINDOW_RESIZABLE)
+        self.setWindowIcon(self.get_icon())
         
         # Central widget
         central_widget = QWidget()
@@ -41,11 +43,19 @@ class LoginWindow(QMainWindow):
         main_layout.setSpacing(20)
         
         # Title
-        title = QLabel(APP_TITLE)
+        title = QLabel("Black Meridian")
         title_font = QFont(FONT_FAMILY, FONT_SIZE_TITLE, QFont.Bold)
         title.setFont(title_font)
         title.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(title)
+        
+        # Subtitle
+        subtitle = QLabel("Secure Authentication System")
+        subtitle_font = QFont(FONT_FAMILY, 10)
+        subtitle.setFont(subtitle_font)
+        subtitle.setAlignment(Qt.AlignCenter)
+        subtitle.setStyleSheet(f"color: {PRIMARY_COLOR};")
+        main_layout.addWidget(subtitle)
         
         # Username section
         username_label = QLabel("Username:")
@@ -101,6 +111,19 @@ class LoginWindow(QMainWindow):
         
         # Connect enter key to login
         self.password_input.returnPressed.connect(self.on_login_clicked)
+    
+    def get_icon(self):
+        """Get window icon"""
+        icon_paths = [
+            os.path.join(os.path.dirname(__file__), "assets", "icon.png"),
+            os.path.join(os.path.dirname(__file__), "assets", "black_meridian.png"),
+        ]
+        
+        for icon_path in icon_paths:
+            if os.path.exists(icon_path):
+                return QIcon(icon_path)
+        
+        return QIcon()
     
     def apply_stylesheet(self):
         """Apply custom stylesheet"""
@@ -162,7 +185,9 @@ class LoginWindow(QMainWindow):
             self.password_input.clear()
             
             # Show success message
-            QMessageBox.information(self, "Success", f"Welcome, {username}!")
+            user_info = self.auth_manager.get_authenticated_user_info()
+            welcome_msg = user_info.get('full_name', username) if user_info else username
+            QMessageBox.information(self, "Black Meridian", f"Welcome, {welcome_msg}!")
             
             # Reset status after 2 seconds
             QTimer.singleShot(2000, self.reset_status)

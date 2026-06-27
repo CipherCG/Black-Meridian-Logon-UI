@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Black Meridian
+Comment=Secure Authentication System
+Exec=python3 /path/to/Black-Meridian-Logon-UI/main.py
+Icon=black-meridian
+Terminal=false
+Categories=Utility;Security;
+Keywords=authentication;login;security;

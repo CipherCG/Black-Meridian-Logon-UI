@@ -1,10 +1,11 @@
-"""Configuration settings for Black Meridian Logon UI"""
+"""Configuration settings for Black Meridian"""
 
 import os
 
 # Application Settings
-APP_TITLE = "Black Meridian Logon"
+APP_TITLE = "Black Meridian"
 APP_VERSION = "1.1.0"
+APP_DESCRIPTION = "Secure Authentication System"
 
 # Database Settings
 DB_PATH = os.path.join(os.path.dirname(__file__), "data")
@@ -13,7 +14,7 @@ DB_BACKUP_DIR = os.path.join(DB_PATH, "backups")
 
 # Window Settings
 WINDOW_WIDTH = 450
-WINDOW_HEIGHT = 350
+WINDOW_HEIGHT = 380
 WINDOW_RESIZABLE = False
 
 # Color Scheme (Dark Professional Theme)
